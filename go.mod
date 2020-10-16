@@ -1,4 +1,4 @@
-module x509
+module github.com/tardevnull/x509
 
 go 1.15
 
