@@ -16,6 +16,7 @@ import (
 	"strings"
 	"time"
 	"unicode/utf8"
+	"github.com/tardevnull/dn"
 )
 
 // ignoreCN disables interpreting Common Name as a hostname. See issue 24151.
@@ -581,8 +582,11 @@ func (c *Certificate) isValid(certType int, currentChain []*Certificate, opts *V
 
 	if len(currentChain) > 0 {
 		child := currentChain[len(currentChain)-1]
-		if !bytes.Equal(child.RawIssuer, c.RawSubject) {
-			return CertificateInvalidError{c, NameMismatch, ""}
+		if result , err := dn.Compare(child.RawIssuer, c.RawSubject); result != true || err != nil {
+			if err == nil{
+				return CertificateInvalidError{c, NameMismatch, ""}
+			}
+			return CertificateInvalidError{c, NameMismatch, err.Error()}
 		}
 	}
 
