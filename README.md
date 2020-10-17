@@ -2,7 +2,7 @@
 
 This libray provides an experimental implementation of x509.
 
-The functional differnce from crypto/x509(1.15.2) is :
+The functional difference from crypto/x509(1.15.2) is :
 ```
 func (c *Certificate) Verify(opts VerifyOptions) (chains [][]*Certificate, err error)
 ```
